@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Symfony App{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('{{ asset('images/background-image.jpg') }}'); /* Adjust the path accordingly */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: hotpink;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<main>
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>
