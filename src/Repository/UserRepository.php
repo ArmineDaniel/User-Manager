@@ -25,7 +25,17 @@ class UserRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('user')
             ->leftJoin('user.deliveryData', 'deliveryData')
-            ->addSelect('deliveryData') // This ensures the associated DeliveryData is fetched
+            ->addSelect('deliveryData')
+            ->getQuery()
+            ->getResult();
+    }
+    public function findUserWithDeliveryData($user)
+    {
+        return $this->createQueryBuilder('user')
+            ->andWhere('user = :u')
+            ->setParameter('u', $user)
+            ->leftJoin('user.deliveryData', 'deliveryData')
+            ->addSelect('deliveryData')
             ->getQuery()
             ->getResult();
     }

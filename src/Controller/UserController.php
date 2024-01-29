@@ -1,7 +1,5 @@
 <?php
 
-// src/Controller/UserController.php
-
 namespace App\Controller;
 
 use App\Form\UserType;
@@ -33,18 +31,19 @@ class UserController extends AbstractController
     }
 
     #[Route('/edit/user/{id}', name: 'edit_user')]
-    public function editUser(Request $request, User $user): Response
+    public function editUser(Request $request, User $user, UserRepository $userRepository): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $d = $userRepository->findUserWithDeliveryData($user);
+        $form = $this->createForm(UserType::class, $d);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {;
             $this->entityManager->flush();
 
             return $this->redirectToRoute('user_list');
         }
 
-        return $this->render('user/edit.html.twig', [
+        return $this->render('edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -73,7 +72,6 @@ class UserController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // Redirect or do other actions
             return $this->redirectToRoute('users');
         }
 
